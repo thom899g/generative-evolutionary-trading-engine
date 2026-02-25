@@ -1,0 +1,71 @@
+# GETE Configuration
+version: 1.0.0
+
+# Exchange Configuration
+exchanges:
+  binance:
+    enabled: true
+    api_key_env: BINANCE_API_KEY
+    api_secret_env: BINANCE_API_SECRET
+    testnet: true
+    rate_limit: 1200
+    markets:
+      - BTC/USDT
+      - ETH/USDT
+      - ADA/USDT
+      - SOL/USDT
+
+# Data Configuration
+data:
+  timeframes:
+    - 1m
+    - 5m
+    - 15m
+    - 1h
+    - 4h
+    - 1d
+  lookback_period: 1000
+  features_to_capture:
+    - open
+    - high
+    - low
+    - close
+    - volume
+    - trades
+    - spread
+
+# Firebase Configuration
+firebase:
+  project_id: "gete-trading-engine"
+  database_url: "https://gete-trading-engine.firebaseio.com"
+  collections:
+    market_data: "market_data"
+    trading_signals: "trading_signals"
+    model_states: "model_states"
+    performance_metrics: "performance_metrics"
+
+# Model Configuration
+models:
+  generative:
+    architecture: "LSTM-VAE"
+    latent_dim: 64
+    sequence_length: 100
+    training_interval: "6h"
+  predictor:
+    architecture: "Transformer"
+    attention_heads: 8
+    dropout_rate: 0.1
+
+# Risk Management
+risk:
+  max_position_size: 0.05  # 5% of portfolio
+  max_daily_loss: 0.02    # 2% max daily loss
+  stop_loss_pct: 0.015    # 1.5% stop loss
+  take_profit_pct: 0.03   # 3% take profit
+
+# Logging
+logging:
+  level: "INFO"
+  file_path: "./logs/gete_engine.log"
+  max_file_size: 10485760  # 10MB
+  backup_count: 5
